@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE generatorConfiguration
+	PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+	"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+	<classPathEntry
+		location="C:\app\PostgresSQL\Drivers\postgresql-9.4.1207.jar" />
+
+	<context id="Kaligia" targetRuntime="MyBatis3">
+
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+
+		<jdbcConnection driverClass="org.postgresql.Driver"
+			connectionURL="jdbc:postgresql://localhost:5432/kaligia"
+			userId="postgres" password="postgres" />
+
+		<javaModelGenerator targetPackage="com.betterit.kaligia.dao.model"
+			targetProject="Kaligia/src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="mapper" targetProject="Kaligia/src/main/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<javaClientGenerator targetPackage="com.betterit.kaligia.dao.repository"
+			targetProject="Kaligia/src/main/java" type="XMLMAPPER">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		
+		<table schema="kaligia" tableName="users" domainObjectName="Users" 
+			enableSelectByPrimaryKey="true" enableSelectByExample="true"
+			enableInsert="true"
+			enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true"
+			enableDeleteByExample="true" enableCountByExample="false"
+			enableUpdateByExample="true" modelType="flat">
+			<generatedKey column="user_id" sqlStatement="JDBC" identity="true" />
+		</table>
+		
+		
+		<table schema="kaligia" tableName="privileges" domainObjectName="Privileges" 
+			enableSelectByPrimaryKey="true" enableSelectByExample="true"
+			enableInsert="true"
+			enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true"
+			enableDeleteByExample="true" enableCountByExample="false"
+			enableUpdateByExample="true" modelType="flat">
+			<generatedKey column="priv_id" sqlStatement="JDBC" identity="true" />
+		</table>
+
+		<table schema="kaligia" tableName="roleprivs" domainObjectName="RolePrivs" 
+			enableSelectByPrimaryKey="true" enableSelectByExample="true"
+			enableInsert="true"
+			enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true"
+			enableDeleteByExample="true" enableCountByExample="false"
+			enableUpdateByExample="true" modelType="flat">
+		</table>
+
+		<table schema="kaligia" tableName="roles" domainObjectName="Roles" 
+			enableSelectByPrimaryKey="true" enableSelectByExample="true"
+			enableInsert="true"
+			enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true"
+			enableDeleteByExample="true" enableCountByExample="false"
+			enableUpdateByExample="true" modelType="flat">
+			<generatedKey column="role_id" sqlStatement="JDBC" identity="true" />
+		</table>
+
+				
+		<table schema="kaligia" tableName="appconfig" domainObjectName="AppConfig" 
+			enableSelectByPrimaryKey="true" enableSelectByExample="true"
+			enableInsert="true"
+			enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true"
+			enableDeleteByExample="true" enableCountByExample="false"
+			enableUpdateByExample="true" modelType="flat">
+			<generatedKey column="config_id" sqlStatement="JDBC" identity="true" />
+		</table>
+		
+	</context>
+</generatorConfiguration>
+

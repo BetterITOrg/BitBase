@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.betterit</groupId>
-	<artifactId>kaligia</artifactId>
+	<artifactId>BitBase</artifactId>
 	<version>1.0</version>
 
-	<name>Kaligia</name>
-	<description>Kaligia Application</description>
+	<name>BitBase</name>
+	<description>BitBase Application</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

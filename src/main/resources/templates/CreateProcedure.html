@@ -1,0 +1,208 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Create Spectra Procedure</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="/images/loginform.css" />
+<link rel="stylesheet" type="text/css" href="/images/form1.css" />
+</head>
+<body>
+
+	<form action="#" th:action="@{CreateProcedure}" th:object="${Procedur}"
+		method="POST">
+		<header>
+				<a id="logo" href="KaligiaMainApp.html" class="linkedImage"></a>
+				<a id="logo1" th:text="Logout" href="logout"></a>
+			</header>
+			<div class="user">
+				<div class="user_logout">
+				<p id="user_name" th:text="${#httpServletRequest.remoteUser}"></p>
+				</div>
+			</div>
+
+		<HR />
+		<fieldset>
+			<legend> Procedure </legend>
+			<table>
+				<tr>
+					<td>Procedure Name:</td>
+					<td><input type="text" required="required" th:field="*{Name}" />
+					</td>
+					<td>Procedure Type</td>
+					<td><select class="type_dropdown" th:field="*{Type}">
+							<option value="IN-VIVO">IN-VIVO</option>
+							<option value="EX-VIVO">EX-VIVO</option>
+					</select></td>
+					<td>Status</td>
+					<td><select class="status_dropdown" th:field="*{Status}">
+							<option value="ACTIVE">ACTIVE</option>
+							<option value="INACTIVE">INACTIVE</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>Description:</td>
+					<td><textarea id="msg" required="required"
+							th:field="*{Description}"></textarea></td>
+				</tr>
+			</table>
+		</fieldset>
+		
+		<fieldset>
+			<legend> Procedure Parameters </legend>
+			<table>
+				<tr>
+					<td>FL Removal Start Position:</td>
+					<td><input type="text" required="required" th:field="*{startPos}" />
+					</td>
+					<td>FL Removal End Position:</td>
+					<td><input type="text" required="required" th:field="*{endPos}" />
+					</td>
+					<td>FL Removal Threshold:</td>
+					<td><input type="text" required="required" th:field="*{threshold}" />
+					</td>
+				</tr>
+			</table>
+		</fieldset>
+		
+		<fieldset>
+			<legend> Device Selection</legend>
+			<table>
+				<tr>
+					<td>Laser:</td>
+					<td><select class="laser_dropdown" th:field="*{Laser}">
+							<option th:each="devic:${DeviceList}" th:if="${devic.type} == 'Laser'"
+								th:value="${devic.deviceId}" th:text="${devic.name}">
+								</option>
+					</select></td>
+					<td>Spectrometer:</td>
+					<td><select class="spectrometer_dropdown"
+						th:field="*{Spectrometer}">
+							<option th:each="devic:${DeviceList}" th:if="${devic.type} == 'Spectrometer'"
+								th:value="${devic.deviceId}" th:text="${devic.name}">
+								</option>
+					</select></td>
+					<td>Labjack</td>
+					<td><select class="labjack_dropdown" th:field="*{Labjack}">
+							<option th:each="devic:${DeviceList}" th:if="${devic.type} == 'LabJack'"
+								th:value="${devic.deviceId}" th:text="${devic.name}">
+								</option>
+					</select></td>
+					<td></td>
+					<td>Excite Fiber</td>
+					<td><select class="exciteFiber_dropdown" th:field="*{excitationFiber}">
+							<option th:each="devic:${DeviceList}" th:if="${devic.type} == 'ExcitationFiber'"
+								th:value="${devic.deviceId}" th:text="${devic.name}">
+								</option>
+					</select></td>
+										
+				</tr>
+				<tr>
+					<td>Probe</td>
+					<td><select class="probe_dropdown" th:field="*{Probe}">
+							<option th:each="devic:${DeviceList}" th:if="${devic.type} == 'Probe'"
+								th:value="${devic.deviceId}" th:text="${devic.name}">
+								</option>
+					</select></td>
+					<td>Tube:</td>
+					<td><select class="tube_dropdown"
+						th:field="*{Tube}">
+							<option th:each="devic:${DeviceList}" th:if="${devic.type} == 'Tube'"
+								th:value="${devic.deviceId}" th:text="${devic.name}">
+								</option>
+					</select></td>
+					
+					<td>Collect Fiber</td>
+					<td><select class="collectFiber_dropdown" th:field="*{collectionFiber}">
+							<option th:each="devic:${DeviceList}" th:if="${devic.type} == 'CollectionFiber'"
+								th:value="${devic.deviceId}" th:text="${devic.name}">
+								</option>
+					</select></td>
+					<td></td>
+					<td></td>
+					<!--					<td>Body Part</td>
+					<td><select class="bodypart_dropdown" name="selectBodyPart"<b>th:field="*{bodypart}"
+								>
+								<option th:each="sopt:${bodypart}" th:value="?" th:text="?">
+									Select Body Part</option></select></td>
+
+  					<td>Sample</td>
+					<td><select class="sample_dropdown" name="selectSample"<b>th:field="*{sample}"
+								>
+								<option th:each="sopt:${samples}" th:value="?" th:text="?">
+									Select Samples</option></select></td>
+
+				</tr> 
+				<tr>
+					
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					-->
+				</tr>
+			</table>
+		</fieldset>
+
+
+		<fieldset>
+			<legend> Set Segment Parameters </legend>
+
+			<TABLE class="create-proc-segments">
+				<TR>
+
+					<th>IntegrationTime</th>
+					<th>Scan2Avg</th>
+					<th>BoxCarWidth</th>
+					<th>ElectricDark</th>
+					<th>NonLinearCorrect</th>
+					<th>Delay</th>
+					<th>Voltage</th>
+				</TR>
+
+
+				<tr th:each="segment, rowStat : *{segmentList}">
+
+					<td><input type="text" required="required"
+						th:field="*{segmentList[__${rowStat.index}__].integrationTime}" /></td>
+					<td><input type="text" required="required"
+						th:field="*{segmentList[__${rowStat.index}__].scan2Average}" /></td>
+					<td><input type="text" required="required"
+						th:field="*{segmentList[__${rowStat.index}__].boxCarWidth}" /></td>
+					<td><input type="text" required="required"
+						th:field="*{segmentList[__${rowStat.index}__].electricDark}" /></td>
+					<td><input type="text" required="required"
+						th:field="*{segmentList[__${rowStat.index}__].nonLinearCorrect}" /></td>
+					<td><input type="text" required="required"
+						th:field="*{segmentList[__${rowStat.index}__].delay}" /></td>
+					<td><input type="text" required="required"
+						th:field="*{segmentList[__${rowStat.index}__].power}" /></td>
+				</tr>
+				<!-- 
+				<TR>
+
+					<TD><input type="text" required="required"
+						name="IntegTime1"  /></TD>
+					<TD><input type="text" required="required"
+						name="Scan2Avg1" /></TD>
+					<TD><input type="text" required="required"
+						name="BoxCarWid1"  /></TD>
+					<TD><input type="text" required="required"
+						name="ElectricDark1" /></TD>
+					<TD><input type="text" required="required"
+						name="NLCorrect1"  /></TD>
+					<TD><input type="text" required="required"
+						name="Delay1"  /></TD>
+					<TD><input type="text" required="required"
+						name="Voltage1" /></TD>
+				</TR>
+
+            -->
+			</TABLE>
+		</fieldset>
+		
+				<input class="submit-button" type="submit" name="Run" value="Create"/>
+			
+
+	</form>
+</body>
+</html>

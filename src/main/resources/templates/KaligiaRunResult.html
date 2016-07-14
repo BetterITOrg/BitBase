@@ -1,0 +1,174 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Kaligia Biosciences: Results</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="/images/form2.css" />
+<script th:src="@{/js/jquery-1.12.2.min.js}"></script>
+<script th:src="@{/js/ChartNew.js}"></script>
+</head>
+<body>
+	<header>
+		<a id="logo1" th:text="Logout" href="logout"></a>
+	</header>
+	<img src="/images/kaligia-logo.png" height="50" width="150" />
+	<h1>Run Status:</h1>
+	<p></p>
+	<p th:text="'Order No. : ' + ${RunOrderResult.orderNo}" />
+	<p th:text="'Description : ' + ${RunOrderResult.Description}" />
+	<iframe th:src="'ProcedureDetails.html?tpsId=' + ${RunOrderResult.testProcedureId}" width="75%" height="500"></iframe>
+	<p></p>
+	<table>
+		<tr th:each="stat,iterStat : ${RunOrderResult.testStatus}">
+			<td th:text="'Segment Run Status :'"></td>
+			<td th:text="${stat}"></td>
+		</tr>
+	</table>
+	<p></p>
+	<p></p>
+	<h1>Graph:</h1>
+	<p></p>
+	<div style="width: 50%">
+		<div>
+			<canvas id="canvasN" height="1000" width="2500"></canvas>
+		</div>
+	</div>
+		<div style="width: 50%">
+		<div>
+			<canvas id="canvasFL" height="1000" width="2500"></canvas>
+		</div>
+	</div>
+
+	<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+		
+	    var datasetValue = [];
+		var dd = [[${RunOrderResult.photon}]];
+		var clr = ["#FF6600", "#003366", "#FF9900", "#00FF00", "#FF0000", "#000000", "#663399", "#663300", "#FF0080", "#5F021F"];
+		
+		for(i=0; i<10; i++) {
+			
+			var j = i +1;
+			var tt = "Reading " + j;
+			var ddi =  dd[i];
+			var clri = clr[i];
+			
+			if (ddi != null) {
+				datasetValue[i] = {
+						title: tt,
+						fillColor : "rgba(220,220,220,0.2)",
+						strokeColor : clri,
+						data : ddi
+					}
+				}
+		}
+		
+		var lineChartData = {
+			labels : /*[[${RunOrderResult.wavenumber[0]}]]*/,
+			datasets : datasetValue
+		}
+		
+		
+		var opt1 = {
+		      animation : false,
+		      canvasBorders : true,
+		      canvasBordersWidth : 3,
+		      canvasBordersColor : "black",
+		      graphTitle : "Raman Shift(cm^-1) vs Photon Count (x10000)",
+		      legend : true,
+		      inGraphDataShow : false,
+		      annotateDisplay : false,
+		      graphTitleFontSize: 18,
+		      yAxisLabel : "Photon Counts",
+		      xAxisLabel : "Raman Shift",
+		      responsive : false,
+		      highLight : false,
+		      yAxisMinimumInterval: 0.5,
+		      showXLabels: 25,
+		      bezierCurve : true,
+		      pointDot : false,
+		      fullWidthGraph : true
+		}
+	
+	    var datasetValueFL = [];
+		var dd = [[${RunOrderResult.flrphoton}]];
+		var clr = ["#FF6600", "#003366", "#FF9900", "#00FF00", "#FF0000", "#000000", "#663399", "#663300", "#FF0080", "#5F021F"];
+		
+		for(i=0; i<10; i++) {
+			
+			var j = i +1;
+			var tt = "Reading " + j;
+			var ddi =  dd[i];
+			var clri = clr[i];
+			
+			if (ddi != null) {
+				datasetValueFL[i] = {
+						title: tt,
+						fillColor : "rgba(220,220,220,0.2)",
+						strokeColor : clri,
+						data : ddi
+					}
+				}
+		}
+		
+		var lineChartDataFL = {
+			labels : /*[[${RunOrderResult.flrwavenumber[0]}]]*/,
+			datasets : datasetValueFL
+		}
+		
+		
+		var opt1FL = {
+		      animation : false,
+		      canvasBorders : true,
+		      canvasBordersWidth : 3,
+		      canvasBordersColor : "black",
+		      graphTitle : "Raman Shift(cm^-1) vs Photon Count (x10000) FL Removed",
+		      legend : true,
+		      inGraphDataShow : false,
+		      annotateDisplay : false,
+		      graphTitleFontSize: 18,
+		      yAxisLabel : "Photon Counts",
+		      xAxisLabel : "Raman Shift",
+		      responsive : false,
+		      highLight : false,
+		      yAxisMinimumInterval: 0.5,
+		      showXLabels: 25,
+		      bezierCurve : true,
+		      pointDot : false,
+		      fullWidthGraph : true
+		}
+		
+		window.onload = function(){
+			var nctx = document.getElementById("canvasN").getContext("2d");
+			window.myLine = new Chart(nctx).Line(lineChartData, opt1);
+			var flctx = document.getElementById("canvasFL").getContext("2d");
+			window.myLine = new Chart(flctx).Line(lineChartDataFL, opt1FL);
+		}
+		
+		function postRunNotes(){
+			var dataToBeSent = $("form").serialize();
+			$.post('/ResultNotes', dataToBeSent, function(data, status) {
+				alert("Run Notes added successfully.")
+			})
+				.fail( function(d, textStatus, error) {
+		        console.error("Run Notes update, status: " + textStatus + ", error: "+error);
+		        alert("Run Notes update failed. Please check..") });
+		};
+	/*]]>*/	
+	</script>
+	<form  action="#" th:action="@{KaligiaRunResult}" th:object="${RunOrderResult}"
+		method="POST">
+		<table>
+		<tr>
+			<td>ResultNotes:</td>
+			<td><textarea id="msg" required="required"
+					th:field="*{resultNotes}"></textarea></td>
+			<td><button id="ajaxButton1" type="button" onclick="postRunNotes(); return false;">ADD NOTES</button>
+					</td>
+			<td><input id="runid" type="hidden" th:field="${RunOrderResult.runID}" /></td>
+		</tr>
+	</table>
+	</form>
+	<a class="link-button" href="KaligiaMainApp.html" target="_self">Go To Home</a>
+</body>
+</html>

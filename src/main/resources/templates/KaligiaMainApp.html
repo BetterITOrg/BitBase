@@ -1,0 +1,71 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Kaligia Main</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="/images/loginform.css" />
+<link rel="stylesheet" type="text/css" href="/images/form1.css" />
+</head>
+<body>
+	
+		<form action="#" th:action="@{KaligiaMainApp}"
+			th:object="${ProcedureList}" method="post">
+			<header>
+				<div id="logo"></div>
+				<a id="logo1" th:text="Logout" href="logout"></a>
+			</header>
+			<div class="user">
+				<div class="user_logout">
+				<p id="user_name" th:text="${#httpServletRequest.remoteUser}"></p>
+				</div>
+			</div>
+			<table class="main-procedure">
+				<tr>
+					<th class="Name-column">Procedure Name</th>
+					<th class="Desc-column">Procedure Details</th>
+				</tr>
+
+				<tr>
+					<td class="Name-column"><select class="procedure_dropdown"
+						size="20" id="procedureDrop" onChange="callIframe()">
+							<option th:each="procedur,iterStat : ${ProcedureList}"
+								th:value="${procedur.procedureId}" th:text="${procedur.name}"
+								th:selected="${iterStat.count==1?'':selected}"></option>
+					</select></td>
+					<td class="Desc-column" id="procFrame"></td>
+				</tr>
+			</table>
+
+			<br /> 
+			
+			 	<a id="proc" class="link-button" href="CreateProcedure.html" target="_self">
+				Create Procedure </a> 
+				<a id="sites" class="link-button" href="SiteDetail.html" target="_self">
+				SETUP SITE </a>
+				<a id="secur" class="link-button" href="KaligiaUserApp.html" target="_self">
+				User Admin </a>
+				<a id="run-order" class="link-button" href="KaligiaRunOrder.html"
+			                                 target="_self"> Run Test </a>
+			
+				
+
+		</form>
+
+	<script type="text/javascript">
+		//<![CDATA[
+
+		var tpsIdd = document.getElementById("procedureDrop").value;
+		document.getElementById("procFrame").innerHTML = "<iframe src=ProcedureDetails.html?tpsId="
+				+ tpsIdd + "></iframe>";
+
+		function callIframe() {
+			var tpsId = document.getElementById("procedureDrop").value;
+			document.getElementById("procFrame").innerHTML = "<iframe src=ProcedureDetails.html?tpsId="
+					+ tpsId + "></iframe>";
+		}
+		//]]>
+	</script>
+
+</body>
+</html>
+

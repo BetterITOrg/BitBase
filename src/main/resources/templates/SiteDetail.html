@@ -1,0 +1,62 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Create/View Site</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="/images/loginform.css" />
+<link rel="stylesheet" type="text/css" href="/images/form1.css" />
+</head>
+<body>
+
+	
+
+	<form name="kbsForm" action="#" th:action="@{SiteDetail}"
+		th:object="${KBSystem}" method="POST">
+		<header>
+				<a id="logo" href="KaligiaMainApp.html" class="linkedImage"></a>
+				<a id="logo1" th:text="Logout" href="logout"></a>
+			</header>
+			<div class="user">
+				<div class="user_logout">
+				<p id="user_name" th:text="${#httpServletRequest.remoteUser}"></p>
+				</div>
+			</div>
+		<table class="main-procedure">
+				<tr>
+					<th class="Name-column">Site Name</th>
+					<th class="Desc-column">KBSystem Details</th>
+				</tr>
+				
+		<tr>
+					<td class="Name-column"><select class="site_dropdown"
+						size="20" id="siteDrop" 
+						 onchange="callsiframe()">
+							<option th:each="site,iterStat : ${SiteList}"
+								th:value="${site.siteId}" th:text="${site.name}"
+								th:selected="${iterStat.count==1?'':selected}"></option>
+					</select></td>
+					<td class="Desc-column" id="kbsFrame"></td>
+		</tr>
+		</table>
+				
+		<br />
+		<a id="csite" class="link-button" href="CreateSite.html" target="_self">
+				Create Site </a>
+	</form>
+	
+	
+		<script type="text/javascript">
+		//<![CDATA[
+		           
+			var sitId = document.getElementById("siteDrop").value;
+			document.getElementById("kbsFrame").innerHTML="<iframe src=KBSDetail.html?siteId="+sitId + "></iframe>";
+
+			function callsiframe() {
+			var tpsId = document.getElementById("siteDrop").value;
+			document.getElementById("kbsFrame").innerHTML="<iframe src=KBSDetail.html?siteId="+tpsId + "></iframe>";
+
+		}
+		//]]>
+	</script>
+</body>
+</html>

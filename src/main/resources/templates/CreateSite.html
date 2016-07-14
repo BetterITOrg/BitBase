@@ -1,0 +1,73 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Create/View Site</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="/images/loginform.css" />
+<link rel="stylesheet" type="text/css" href="/images/form1.css" />
+</head>
+<body>
+
+	<form name="siteForm" action="#" th:action="@{CreateSite}"
+		th:object="${Site}" method="POST">
+		<header>
+				<a id="logo" href="KaligiaMainApp.html" class="linkedImage"></a>
+			</header>
+			<div class="user">
+				<div class="user_logout">
+				<p id="user_name" th:text="${#httpServletRequest.remoteUser}"></p>
+				</div>
+			</div>
+
+		<HR />
+		
+		<fieldset>
+			<legend> Site </legend>
+			<table>
+				<tr>
+					<td>Site Name:</td>
+					<td><input type="text" required="required" th:field="*{Name}" />
+					</td>
+				</tr>
+				<tr>
+					<td>Site Type</td>
+					<td><select class="sitetype_dropdown" th:field="*{Type}">
+							<option value="Clinic">Clinic</option>
+							<option value="DR-Office">DrOffice</option>
+					</select></td>
+					
+				</tr>
+				<tr>
+					<td>Street Address:</td>
+					<td><input type="text" required="required"
+						th:field="*{address}" /></td>
+				</tr>
+				<tr>
+					<td>City:</td>
+					<td><input type="text" required="required" th:field="*{city}" />
+					</td>
+					<td>State</td>
+					<td><input type="text" required="required" th:field="*{state}" />
+					</td>
+
+				</tr>
+				<tr>
+					<td>Contact Name:</td>
+					<td><input type="text" required="required"
+						th:field="*{contact}" /></td>
+
+					<td>Phone #:</td>
+					<td><input type="text" required="required" th:field="*{phone}" />
+					</td>
+				</tr>
+			</table>
+			
+			<input class="submit-button" type="submit" name="createSearch"
+				value="Create Site" /> <br></br> 
+				
+		
+		</fieldset>
+	</form>
+
+</body>
+</html>

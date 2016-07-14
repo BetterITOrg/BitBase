@@ -1,0 +1,275 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Create/View Site</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="/images/form1.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+</head>
+<body>
+
+	
+
+	<form name="kbsForm" action="#" th:action="@{SiteDetail}"
+		th:object="${KBSystem}" method="POST">
+		
+			<div class="kbSystem" id="kbs-div" > <!-- style="display:none" -->
+			
+			<fieldset>
+				<legend> Kaligia Bio System </legend>
+				<table>
+					<tr>
+						<td>KB System Name:</td>
+						<td><input type="text" required="required"
+							th:field="*{endpoint.name}" 
+							th:value="${KBSystem.endpoint.name}"/></td>
+						<td>Status</td>
+						<td><select class="status_dropdown" th:field="*{endpoint.status}">
+							<option value="ACTIVE" th:selected="${KBSystem.endpoint.status==ACTIVE?'':selected}">ACTIVE</option>
+							<option value="INACTIVE" th:selected="${KBSystem.endpoint.status==INACTIVE?'':selected}">INACTIVE</option>
+						</select></td>
+						<td>Test Type:</td>
+						<td><select class="type_dropdown" th:field="*{endpoint.type}">
+								<option value="BOTH" th:selected="${KBSystem.endpoint.type==BOTH?'':selected}">BOTH</option>
+								<option value="IN-VIVO" th:selected="${KBSystem.endpoint.type=='IN-VIVO'?'':selected}">IN-VIVO</option>
+								<option value="EX-VIVO" th:selected="${KBSystem.endpoint.type=='EX-VIVO'?'':selected}">EX-VIVO</option>
+								
+						</select></td>
+
+						<td>Description:</td>
+						<td><textarea id="msg" required="required"
+								th:field="*{endpoint.description}"
+								th:value="${KBSystem.endpoint.description}"></textarea></td>
+								
+							<td><input type="text" hidden="hidden"
+							th:field="*{endpoint.siteId}" 
+							th:value="${KBSystem.endpoint.siteId}"/></td>
+							<td><input type="text" hidden="hidden"
+							th:field="*{endpoint.endPointId}" 
+							th:value="${KBSystem.endpoint.endPointId}"/></td>	
+					</tr>
+				</table>
+			</fieldset>
+
+
+			<fieldset>
+				<legend> Kaligia Bio System Devices</legend>
+				<table>
+					
+					<tr>
+						<td>Compute Device:</td>
+  						<td><select class="compute_dropdown" th:field="*{kbsDeviceList[0].diObj.deviceId}">
+								<option th:each="devic:${DeviceList}"
+									th:if="${devic.type} == 'Compute'" th:value="${devic.deviceId}"
+									th:text="${devic.name}"
+									th:selected="${KBSystem.kbsDeviceList[0].diObj.deviceId==devic.deviceId?'':selected}"></option>
+						</select></td>
+
+						<td>Serial No:</td>
+						<td><input type="text" required="required"
+							th:field="*{kbsDeviceList[0].diObj.serialId}" 
+							th:value="${KBSystem.kbsDeviceList[0].diObj.serialId}"/></td>
+						<td>Type:</td>
+						<td><select class="type1_dropdown" th:field="*{kbsDeviceList[0].usedFor}">
+								<option value="BOTH"
+								th:selected="${KBSystem.kbsDeviceList[0].usedFor=='BOTH'?'':selected}">BOTH</option>
+								<option value="IN-VIVO"
+								th:selected="${KBSystem.kbsDeviceList[0].usedFor=='IN-VIVO'?'':selected}">IN-VIVO</option>
+								<option value="EX-VIVO"
+								th:selected="${KBSystem.kbsDeviceList[0].usedFor=='EX-VIVO'?'':selected}">EX-VIVO</option>
+								
+						</select></td>
+					</tr>
+					<tr>
+						<td>Laser</td>
+						<td><select class="laser_dropdown" th:field="*{kbsDeviceList[1].diObj.deviceId}">
+								<option th:each="devic:${DeviceList}"
+									th:if="${devic.type} == 'Laser'" th:value="${devic.deviceId}"
+									th:text="${devic.name}"></option>
+						</select></td>
+						<td>Serial No:</td>
+						<td><input type="text" required="required"
+							th:field="*{kbsDeviceList[1].diObj.serialId}" /></td>
+						<td>Type:</td>
+						<td><select class="type1_dropdown" th:field="*{kbsDeviceList[1].usedFor}">
+								<option value="BOTH">BOTH</option>
+								<option value="IN-VIVO">IN-VIVO</option>
+								<option value="EX-VIVO">EX-VIVO</option>
+								
+						</select></td>
+					</tr> 
+					<tr>
+						<td>Spectrometer</td>
+						<td><select class="spectrometer_dropdown" th:field="*{kbsDeviceList[2].diObj.deviceId}">
+								<option th:each="devic:${DeviceList}"
+									th:if="${devic.type} == 'Spectrometer'"
+									th:value="${devic.deviceId}" th:text="${devic.name}"></option>
+						</select></td>
+						<td>Serial No:</td>
+						<td><input type="text" required="required"
+							th:field="*{kbsDeviceList[2].diObj.serialId}" /></td>
+						<td>Type:</td>
+						<td><select class="type1_dropdown" th:field="*{kbsDeviceList[2].usedFor}">
+								<option value="BOTH">BOTH</option>
+								<option value="IN-VIVO">IN-VIVO</option>
+								<option value="EX-VIVO">EX-VIVO</option>
+								
+						</select></td>
+					</tr>
+					<tr>
+						<td>Probe 1:</td>
+						<td><select class="probe_dropdown" th:field="*{kbsDeviceList[3].diObj.deviceId}">
+								<option th:each="devic:${DeviceList}"
+									th:if="${devic.type} == 'Probe'" th:value="${devic.deviceId}"
+									th:text="${devic.name}"></option>
+						</select></td>
+						<td>Serial No:</td>
+						<td><input type="text" required="required"
+							th:field="*{kbsDeviceList[3].diObj.serialId}" /></td>
+						<td>Type:</td>
+						<td><select class="type1_dropdown" th:field="*{kbsDeviceList[3].usedFor}">
+								<option value="IN-VIVO">IN-VIVO</option>
+								<option value="EX-VIVO">EX-VIVO</option>
+								
+						</select></td>
+						</tr>
+					<tr>
+						<td>Labjack</td>
+						<td><select class="labjack_dropdown" th:field="*{kbsDeviceList[4].diObj.deviceId}">
+								<option th:each="devic:${DeviceList}"
+									th:if="${devic.type} == 'LabJack'" th:value="${devic.deviceId}"
+									th:text="${devic.name}"></option>
+						</select></td>
+						<td>Serial No:</td>
+						<td><input type="text" required="required"
+							th:field="*{kbsDeviceList[4].diObj.serialId}" /></td>
+						<td>Type:</td>
+						<td><select class="type1_dropdown" th:field="*{kbsDeviceList[4].usedFor}">
+								<option value="BOTH">BOTH</option>
+								<option value="IN-VIVO">IN-VIVO</option>
+								<option value="EX-VIVO">EX-VIVO</option>
+								
+						</select></td>
+					</tr>
+					<tr>
+						<td>Collect Fiber</td>
+						<td><select class="collectFiber_dropdown"
+							th:field="*{kbsDeviceList[5].diObj.deviceId}">
+								<option th:each="devic:${DeviceList}"
+									th:if="${devic.type} == 'CollectionFiber'"
+									th:value="${devic.deviceId}" th:text="${devic.name}"></option>
+						</select></td>
+						<td>Serial No:</td>
+						<td><input type="text" required="required"
+							th:field="*{kbsDeviceList[5].diObj.serialId}" /></td>
+						<td>Type:</td>
+						<td><select class="type1_dropdown" th:field="*{kbsDeviceList[5].usedFor}">
+								<option value="BOTH">BOTH</option>
+								<option value="IN-VIVO">IN-VIVO</option>
+								<option value="EX-VIVO">EX-VIVO</option>
+								
+						</select></td>
+					</tr>
+					<tr>
+						<td>Excite Fiber</td>
+						<td><select class="exciteFiber_dropdown"
+							th:field="*{kbsDeviceList[6].diObj.deviceId}">
+								<option th:each="devic:${DeviceList}"
+									th:if="${devic.type} == 'ExcitationFiber'"
+									th:value="${devic.deviceId}" th:text="${devic.name}"></option>
+						</select></td>
+						<td>Serial No:</td>
+						<td><input type="text" required="required"
+							th:field="*{kbsDeviceList[6].diObj.serialId}" /></td>
+						<td>Type:</td>
+						<td><select class="type1_dropdown" th:field="*{kbsDeviceList[6].usedFor}">
+								<option value="BOTH">BOTH</option>
+								<option value="IN-VIVO">IN-VIVO</option>
+								<option value="EX-VIVO">EX-VIVO</option>
+								
+						</select></td>
+					</tr>
+					<tr>
+						<td>Probe 2:</td>
+						<td><select class="probe_dropdown" th:field="*{kbsDeviceList[7].diObj.deviceId}">
+								<option th:each="devic:${DeviceList}"
+									th:if="${devic.type} == 'Probe'" th:value="${devic.deviceId}"
+									th:text="${devic.name}"></option>
+						</select></td>
+						<td>Serial No:</td>
+						<td><input type="text" 
+							th:field="*{kbsDeviceList[7].diObj.serialId}" /></td>
+						<td>Type:</td>
+						<td><select class="type1_dropdown" th:field="*{kbsDeviceList[7].usedFor}">
+								<option value="IN-VIVO">IN-VIVO</option>
+								<option value="EX-VIVO">EX-VIVO</option>
+								
+						</select></td>
+						</tr>
+					<tr>
+						<td>Camera:</td>
+						<td><select class="camera_dropdown" th:field="*{kbsDeviceList[8].diObj.deviceId}">
+								<option th:each="devic:${DeviceList}"
+									th:if="${devic.type} == 'Camera'" th:value="${devic.deviceId}"
+									th:text="${devic.name}"></option>
+						</select></td>
+						<td>Serial No:</td>
+						<td><input type="text" 
+							th:field="*{kbsDeviceList[8].diObj.serialId}" /></td>
+						<td>Type:</td>
+						<td><select class="type1_dropdown" th:field="*{kbsDeviceList[8].usedFor}">
+								<option value="BOTH">BOTH</option>
+								<option value="IN-VIVO">IN-VIVO</option>
+								<option value="EX-VIVO">EX-VIVO</option>
+								
+						</select></td>
+						</tr>
+							
+				</table>
+			</fieldset>
+				<input class="submit-button" type="submit" name="Save" value="Update" /><br></br>
+		</div>
+
+
+	</form>
+	
+	
+		<script type="text/javascript">
+		//<![CDATA[
+
+		$(document).ready(function(){
+			$("ajaxButton").click( function(){
+				$ajax({url:"/SiteDetail",
+					method:"POST",
+					success: function(status){
+						console.log("KBSytem Inserted Scuccessfully" + status);
+						alert("KBSytem Inserted Scuccessfully" + status);
+					},
+					error: function(status){
+						console.log("KBSytem Insert failed" + status);
+						alert("KBSytem Insert failed" + status);
+					}
+				});
+				});	
+			});
+			
+		
+		function getUrlVars() {
+			var vars = {};
+			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+			vars[key] = value;
+			});
+			return vars;
+			}
+		
+		function callenable() {
+			document.getElementById("kbs-div").style.display="inline";
+			/*			var tpsId = document.getElementById("siteDrop").value;
+			document.getElementById("procFrame").innerHTML = "<iframe src=ProcedureDetails.html?tpsId="
+					+ tpsId + "></iframe>";
+					*/
+		}
+		//]]>
+	</script>
+</body>
+</html>
